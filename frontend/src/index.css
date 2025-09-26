@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* CuddleCloud Calming Color System */
+    --background: 245 50% 97%;
+    --foreground: 220 15% 20%;
+
+    --card: 240 30% 96%;
+    --card-foreground: 220 15% 25%;
+
+    --popover: 240 30% 96%;
+    --popover-foreground: 220 15% 25%;
+
+    /* Soft baby blue primary */
+    --primary: 210 70% 75%;
+    --primary-foreground: 210 20% 98%;
+
+    /* Lavender secondary */
+    --secondary: 270 40% 85%;
+    --secondary-foreground: 270 20% 25%;
+
+    /* Soft pink accent */
+    --accent: 340 50% 85%;
+    --accent-foreground: 340 30% 25%;
+
+    /* Pale yellow highlight */
+    --highlight: 45 90% 85%;
+    --highlight-foreground: 45 40% 30%;
+
+    /* Dark lilac */
+    --dark-lilac: 270 50% 45%;
+
+    --muted: 230 25% 92%;
+    --muted-foreground: 220 15% 50%;
+
+    --destructive: 0 70% 70%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 20% 88%;
+    --input: 220 20% 94%;
+    --ring: 210 70% 75%;
+
+    --radius: 1rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes wave-motion {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(2deg) scale(1.02); }
+  75% { transform: rotate(-2deg) scale(0.98); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes cry-wave {
+  0% { height: 20px; }
+  25% { height: 40px; }
+  50% { height: 25px; }
+  75% { height: 35px; }
+  100% { height: 20px; }
+}
+
+@layer components {
+  .hero-button {
+    @apply bg-gradient-to-r from-primary via-secondary to-accent text-white px-8 py-4 rounded-full font-medium shadow-lg hover:shadow-xl transform transition-all duration-300 hover:scale-105;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/80 border border-white/30 rounded-2xl shadow-lg;
+  }
+  
+  .night-sky {
+    background: linear-gradient(135deg, #1a1b3e 0%, #2d1b69 50%, #1a1b3e 100%);
+  }
+  
+  .dawn-gradient {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 50%, #f0f4ff 100%);
+  }
+  
+  .floating-element {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .twinkling {
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  
+  .gentle-float {
+    animation: gentle-bounce 4s ease-in-out infinite;
+  }
+  
+  .wave-animation {
+    animation: wave-motion 3s ease-in-out infinite;
+  }
+  
+  .heartbeat-animation {
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+  
+  .cry-bar {
+    animation: cry-wave 0.5s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .animate-delay-1 { animation-delay: 1s; }
+  .animate-delay-2 { animation-delay: 2s; }
+  .animate-delay-3 { animation-delay: 3s; }
+  .animate-delay-4 { animation-delay: 4s; }
+}
