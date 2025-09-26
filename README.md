@@ -1,191 +1,191 @@
-# Somni - Intelligenter Baby Monitor
+# Somni - Intelligent Baby Monitor
 
-Somni ist ein KI-gestützter Baby Monitor, der automatisch Babygeschrei erkennt und darauf mit beruhigenden Worten reagiert. Das System ist speziell für frische Eltern entwickelt, die gerade nachts Unterstützung bei schreienden Babys benötigen.
+Somni is an AI-powered baby monitor that automatically detects baby crying and responds with soothing words. The system is specifically designed for new parents who need support with crying babies, especially at night.
 
-## 🏗️ Projekt-Status
+## 🗗️ Project Status
 
-**Aktueller Entwicklungsstand:**
-- ✅ **Backend**: Vollständig funktionsfähig mit Baby-Schrei-Erkennung und KI-Beruhigung
-- ✅ **Frontend**: Fertig entwickelt (React/TypeScript mit Loveable)
-- 🚧 **Integration**: Frontend-Backend-Integration steht noch aus
-- ✅ **Interne Kommunikation**: TCP zwischen Detector und Agent implementiert
+**Current Development Status:**
+- ✅ **Backend**: Fully functional with baby cry detection and AI soothing
+- ✅ **Frontend**: Fully developed (React/TypeScript with Loveable)
+- 🚧 **Integration**: Frontend-backend integration is still pending
+- ✅ **Internal Communication**: TCP between Detector and Agent implemented
 
-## 🎯 Funktionen
+## 🎯 Features
 
-- **Intelligente Schrei-Erkennung**: Nutzt Google's YAMNet für präzise Baby-Schrei-Detektion
-- **KI-Beruhigungs-Agent**: Spricht automatisch beruhigende Worte mit natürlicher Stimme
-- **Echtzeit-Verarbeitung**: Sofortige Reaktion bei erkanntem Babygeschrei
-- **Bestätigungslogik**: Vermeidet Fehlalarme durch mehrstufige Verifikation
-- **LiveKit-Integration**: Hochqualitative Echtzeit-Audio-Übertragung
+- **Intelligent Cry Detection**: Uses Google's YAMNet for precise baby cry detection
+- **AI Soothing Agent**: Automatically speaks soothing words with natural voice
+- **Real-time Processing**: Immediate response when baby crying is detected
+- **Confirmation Logic**: Prevents false alarms through multi-stage verification
+- **LiveKit Integration**: High-quality real-time audio transmission
 
 
 ## 🚀 Quick Start
 
-### Voraussetzungen
+### Prerequisites
 
-- **Python 3.9+** für Backend
-- **Node.js 18+** für Frontend
-- **Mikrofon** für Audio-Eingabe
-- **Lautsprecher/Kopfhörer** für Audio-Ausgabe
-- **Internet-Verbindung** für KI-Services
+- **Python 3.9+** for backend
+- **Node.js 18+** for frontend
+- **Microphone** for audio input
+- **Speakers/Headphones** for audio output
+- **Internet Connection** for AI services
 
-### 1. Repository klonen
+### 1. Clone Repository
 
 ```bash
 git clone <your-repo-url>
 cd somni
 ```
 
-### 2. Backend einrichten
+### 2. Backend Setup
 
-#### API-Keys konfigurieren
+#### Configure API Keys
 ```bash
 cd backend/agent
 ```
 
-Erstelle `.env.local` mit:
+Create `.env.local` with:
 ```bash
 # LiveKit Cloud (https://cloud.livekit.io/)
 LIVEKIT_API_KEY=your_livekit_api_key
 LIVEKIT_API_SECRET=your_livekit_api_secret
 LIVEKIT_URL=wss://your-project.livekit.cloud
 
-# KI Services
+# AI Services
 ANTHROPIC_API_KEY=your_claude_api_key
 ELEVEN_API_KEY=your_elevenlabs_api_key
 ```
 
-#### Baby-Schrei-Detektor starten
+#### Start Baby Cry Detector
 ```bash
 cd backend/detector
 
-# Virtual Environment erstellen
+# Create virtual environment
 python -m venv venv_detector
 
-# Aktivieren (Windows)
+# Activate (Windows)
 venv_detector\Scripts\activate
-# Aktivieren (macOS/Linux)
+# Activate (macOS/Linux)
 source venv_detector/bin/activate
 
-# Dependencies installieren
+# Install dependencies
 pip install tensorflow tensorflow-hub sounddevice numpy
 
-# Service starten
+# Start service
 python baby_cry_detector_service.py --threshold 0.3
 ```
 
-#### KI-Beruhigungs-Agent starten
+#### Start AI Soothing Agent
 ```bash
-# Neues Terminal
+# New terminal
 cd backend/agent
 
-# Agent starten (Dev Mode - Audio über Browser)
+# Start agent (Dev Mode - Audio via browser)
 uv run baby_soothing_agent.py dev
 
-# Dann öffne: https://agents-playground.livekit.io/
-# Verbinde mit deinen LiveKit Credentials
+# Then open: https://agents-playground.livekit.io/
+# Connect with your LiveKit credentials
 ```
 
-### 3. Frontend einrichten
+### 3. Frontend Setup
 
 ```bash
 cd frontend
 
-# Dependencies installieren
+# Install dependencies
 npm install
 
-# Development Server starten
+# Start development server
 npm run dev
 ```
 
-Das Frontend ist vollständig entwickelt. Du kannst es über das [Loveable-Projekt](https://lovable.dev/projects/bc57c729-7974-4523-a111-622721564084) bearbeiten und anpassen.
+The frontend is fully developed. You can edit and customize it via the [Loveable project](https://lovable.dev/projects/bc57c729-7974-4523-a111-622721564084).
 
-**⚠️ Integration ausstehend**: Das Frontend kann noch nicht mit dem Backend kommunizieren. Eine REST API oder WebSocket-Verbindung muss noch implementiert werden.
+**⚠️ Integration pending**: The frontend cannot yet communicate with the backend. A REST API or WebSocket connection still needs to be implemented.
 
-## 🔧 Technischer Überblick
+## 🔧 Technical Overview
 
-### Backend-Architektur
+### Backend Architecture
 
-**Baby-Schrei-Detektor (`detector/`)**
-- Nutzt Google's YAMNet für Audio-Klassifikation
-- Kontinuierliche Mikrofon-Überwachung
-- TCP-Server für Event-Kommunikation
-- Bestätigungslogik: 60% Schrei-Erkennungsrate über 5 Sekunden
+**Baby Cry Detector (`detector/`)**
+- Uses Google's YAMNet for audio classification
+- Continuous microphone monitoring
+- TCP server for event communication
+- Confirmation logic: 60% cry detection rate over 5 seconds
 
-**KI-Beruhigungs-Agent (`agent/`)**
-- LiveKit Voice Agent mit Claude 4 Sonnet
-- ElevenLabs Text-to-Speech (natürliche Stimme)
-- TCP-Client für Detektor-Events
-- Cooldown-System verhindert Spam
+**AI Soothing Agent (`agent/`)**
+- LiveKit Voice Agent with Claude 4 Sonnet
+- ElevenLabs Text-to-Speech (natural voice)
+- TCP client for detector events
+- Cooldown system prevents spam
 
-**Kommunikation**
-- TCP-Socket zwischen Detektor und Agent
-- JSON-basierte Event-Messages
-- Asynchrone Event-Verarbeitung
+**Communication**
+- TCP socket between detector and agent
+- JSON-based event messages
+- Asynchronous event processing
 
-### Frontend-Architektur
+### Frontend Architecture
 
-**Technologie-Stack:**
-- React mit TypeScript
-- Vite Build-System  
-- shadcn/ui Komponenten
+**Technology Stack:**
+- React with TypeScript
+- Vite build system  
+- shadcn/ui components
 - Tailwind CSS
-- Loveable-basierte Entwicklung
+- Loveable-based development
 
-**Aktuelle Features:**
-- Moderne, responsive Benutzeroberfläche
-- Baby Monitor Dashboard
-- Einstellungen für Systemkonfiguration
-- Status-Anzeigen und Logs
+**Current Features:**
+- Modern, responsive user interface
+- Baby monitor dashboard
+- Settings for system configuration
+- Status displays and logs
 
-**⚠️ Integration fehlt noch:**
-- REST API für Backend-Kommunikation
-- WebSocket für Live-Updates
-- Einstellungen-Synchronisation
-- Live-Audio-Visualisierung
+**⚠️ Integration still missing:**
+- REST API for backend communication
+- WebSocket for live updates
+- Settings synchronization
+- Live audio visualization
 
-## 📊 System-Monitoring
+## 📊 System Monitoring
 
-### Detector Logs verstehen
+### Understanding Detector Logs
 ```
-🔍 Mögliches Weinen erkannt (Prob: 0.42) - warte 3.0s für Bestätigung...
-👶🔊 WEINEN BESTÄTIGT! (65.2% over 5.0s, Avg Prob: 0.45)
-📊 Status: CRYING | Prob: 0.52 | Clients: 1
-🤫 Stille-Timer gestartet (Prob: 0.08) - brauche 8.0s
-✅ BERUHIGUNG BESTÄTIGT! (8.2s kontinuierliche Stille)
-```
-
-### Agent Logs verstehen
-```
-🍼 Baby Soothing Agent gestartet!
-📡 Starte TCP Event Listener...
-🔗 Verbindung zum Detektor-Service hergestellt
-👶🔊 Baby schreit! Starte Beruhigung...
-🗣️ Sage: 'Shh, shh... everything is okay, little one.'
-⏱️ Cooldown gestartet (10.0s)
+🔍 Possible crying detected (Prob: 0.42) - waiting 3.0s for confirmation...
+👶🔊 CRYING CONFIRMED! (65.2% over 5.0s, Avg Prob: 0.45)
+🔊 Status: CRYING | Prob: 0.52 | Clients: 1
+🤫 Silence timer started (Prob: 0.08) - need 8.0s
+✅ SOOTHING CONFIRMED! (8.2s continuous silence)
 ```
 
-## 🛠️ Konfiguration
+### Understanding Agent Logs
+```
+🍼 Baby Soothing Agent started!
+📡 Starting TCP Event Listener...
+🔗 Connection to detector service established
+👶🔊 Baby is crying! Starting soothing...
+🗣️ Saying: 'Shh, shh... everything is okay, little one.'
+⏱️ Cooldown started (10.0s)
+```
 
-### Detektor-Einstellungen
+## 🛠️ Configuration
+
+### Detector Settings
 
 ```python
-# Empfindlichkeit anpassen
-python baby_cry_detector_service.py --threshold 0.2    # Empfindlicher
-python baby_cry_detector_service.py --threshold 0.4    # Weniger empfindlich
+# Adjust sensitivity
+python baby_cry_detector_service.py --threshold 0.2    # More sensitive
+python baby_cry_detector_service.py --threshold 0.4    # Less sensitive
 
-# Custom Host/Port
+# Custom host/port
 python baby_cry_detector_service.py --host localhost --port 9999
 ```
 
-### Agent-Einstellungen
+### Agent Settings
 
-**Beruhigungs-Modi:**
-- `dev`: Audio über Browser (https://agents-playground.livekit.io/)
-- `console`: Direkte Audio-Ausgabe über System-Lautsprecher
+**Soothing Modes:**
+- `dev`: Audio via browser (https://agents-playground.livekit.io/)
+- `console`: Direct audio output via system speakers
 
 ```bash
-# Dev Mode (empfohlen)
+# Dev Mode (recommended)
 uv run baby_soothing_agent.py dev
 
 # Console Mode
@@ -194,105 +194,101 @@ uv run baby_soothing_agent.py console
 
 ## 🔍 Testing
 
-1. **System-Check**: Beide Services laufen und sind verbunden
-2. **Baby-Schrei simulieren**: Lautes Weinen/Schreien ins Mikrofon
-3. **Beruhigung hören**: Agent sollte beruhigende Worte sprechen
+1. **System Check**: Both services running and connected
+2. **Simulate baby crying**: Loud crying/screaming into microphone
+3. **Listen for soothing**: Agent should speak soothing words
 
 ## 📋 Roadmap
 
-### Kurzfristig (Höchste Priorität)
-- [ ] **REST API für Frontend-Backend-Integration** 
-  - Status-Endpunkte (Detector-Status, Agent-Status)
-  - Konfigurations-Endpunkte (Threshold, Einstellungen)
-  - Event-History-Endpunkte
-- [ ] **WebSocket-Verbindung für Live-Updates**
-  - Real-time Schrei-Ereignisse im Frontend anzeigen
-  - Live-Probability-Updates
-  - Agent-Status-Updates
-- [ ] **Frontend-Backend-Integration testen und debuggen**
+### Short-term (Highest Priority)
+- [ ] **REST API for frontend-backend integration** 
+  - Status endpoints (Detector status, Agent status)
+  - Configuration endpoints (Threshold, settings)
+  - Event history endpoints
+- [ ] **WebSocket connection for live updates**
+  - Display real-time cry events in frontend
+  - Live probability updates
+  - Agent status updates
+- [ ] **Test and debug frontend-backend integration**
 
-### Mittelfristig (Nach Integration)
-- [ ] Erweiterte LLM-Integration für personalisiertere Beruhigung
-- [ ] Mehrsprachige Unterstützung
-- [ ] Mobile App (React Native)
-- [ ] Smartphone-Benachrichtigungen
-- [ ] Eltern-Dashboard mit detaillierten Statistiken
+### Medium-term (After Integration)
+- [ ] Advanced LLM integration for more personalized soothing
+- [ ] Multi-language support
+- [ ] Mobile app (React Native)
+- [ ] Smartphone notifications
+- [ ] Parent dashboard with detailed statistics
 
-### Langfristig (Vision)
-- [ ] Machine Learning für personalisierte Beruhigungsstrategien
-- [ ] Integration mit Smart Home Systemen
-- [ ] Video-Überwachung mit Avatar-Darstellung
-- [ ] Medizinische Datenanalyse und Empfehlungen
+### Long-term (Vision)
+- [ ] Machine learning for personalized soothing strategies
+- [ ] Smart home system integration
+- [ ] Video monitoring with avatar representation
+- [ ] Medical data analysis and recommendations
 
 ## 🐛 Troubleshooting
 
-### Häufige Probleme
+### Common Issues
 
 **Detector**
 - **"Models not found"**: `pip install tensorflow tensorflow-hub`
-- **Mikrofon nicht erkannt**: Mikrofon-Berechtigungen prüfen
-- **Keine Schrei-Erkennung**: Threshold auf 0.2 senken
+- **Microphone not detected**: Check microphone permissions
+- **No cry detection**: Lower threshold to 0.2
 
 **Agent**
-- **Kein Audio im Dev Mode**: Browser mit LiveKit verbinden
-- **ElevenLabs Fehler**: API Key und Credits prüfen
-- **TCP Connection refused**: Detector zuerst starten
+- **No audio in Dev Mode**: Connect browser with LiveKit
+- **ElevenLabs error**: Check API key and credits
+- **TCP Connection refused**: Start detector first
 
 **Frontend**
-- **Build-Fehler**: `npm ci` für saubere Installation  
-- **Hot Reload funktioniert nicht**: Server neu starten
-- **Frontend lädt nicht**: Port 5173 verfügbar? (`lsof -i :5173`)
+- **Build errors**: `npm ci` for clean installation  
+- **Hot reload not working**: Restart server
+- **Frontend won't load**: Port 5173 available? (`lsof -i :5173`)
 
 **Integration**
-- **Frontend kann Backend nicht erreichen**: REST API noch nicht implementiert
-- **Keine Live-Updates**: WebSocket-Verbindung fehlt noch
-- **Einstellungen nicht synchron**: Backend-Frontend-Integration ausstehend
+- **Frontend cannot reach backend**: REST API not yet implemented
+- **No live updates**: WebSocket connection still missing
+- **Settings not synchronized**: Backend-frontend integration pending
 
-## 🤝 Entwicklung
+## 🤝 Development
 
-### Backend-Entwicklung
-Das Backend ist vollständig in Python entwickelt und nutzt moderne async/await-Patterns für optimale Performance.
+### Backend Development
+The backend is fully developed in Python and uses modern async/await patterns for optimal performance.
 
-### Frontend-Entwicklung  
-Das Frontend ist vollständig entwickelt und kann sowohl lokal als auch über das [Loveable-Projekt](https://lovable.dev/projects/bc57c729-7974-4523-a111-622721564084) bearbeitet werden.
+### Frontend Development  
+The frontend is fully developed and can be edited both locally and via the [Loveable project](https://lovable.dev/projects/bc57c729-7974-4523-a111-622721564084).
 
 ### Integration (TO-DO)
-Die Integration zwischen Frontend und Backend ist der nächste kritische Schritt:
+Integration between frontend and backend is the next critical step:
 
-**Benötigte API-Endpunkte:**
+**Required API Endpoints:**
 ```python
-# Beispiel REST API Struktur (noch zu implementieren)
+# Example REST API structure (still to be implemented)
 GET /api/status          # System Status (Detector + Agent)
 GET /api/events          # Event History  
-POST /api/config         # Konfiguration ändern
+POST /api/config         # Change Configuration
 WebSocket /ws/live       # Live Updates
 ```
 
-**Frontend-Integration Tasks:**
-- API Client implementieren
-- WebSocket-Verbindung für Live-Updates
-- Status-Dashboard mit Backend-Daten verbinden
-- Konfigurationsseite mit Backend synchronisieren
+**Frontend Integration Tasks:**
+- Implement API client
+- WebSocket connection for live updates
+- Connect status dashboard with backend data
+- Synchronize configuration page with backend
 
-### Beitragen
-1. Fork das Repository
-2. Erstelle einen Feature-Branch
-3. Committe deine Änderungen
-4. Push zum Branch
-5. Öffne einen Pull Request
-
-## 📄 Lizenz
-
-[Lizenz noch zu definieren]
+### Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
 ## 🙏 Credits
 
-- **YAMNet**: Google's Audio-Klassifikations-Modell
-- **LiveKit**: Echtzeit-Audio/Video-Infrastruktur
+- **YAMNet**: Google's audio classification model
+- **LiveKit**: Real-time audio/video infrastructure
 - **Anthropic Claude**: Large Language Model
-- **ElevenLabs**: Text-to-Speech-Service
-- **Loveable**: Frontend-Entwicklungsplattform
+- **ElevenLabs**: Text-to-Speech service
+- **Loveable**: Frontend development platform
 
 ---
 
-**Aktueller Entwicklungsstand**: Frontend und Backend sind einzeln vollständig funktionsfähig. Der nächste kritische Schritt ist die Implementation der REST API/WebSocket-Integration, damit das Frontend mit dem Backend kommunizieren kann. Bei Fragen oder Problemen, bitte Issues erstellen oder direkt kontaktieren.
+**Current Development Status**: Frontend and backend are individually fully functional. The next critical step is implementing the REST API/WebSocket integration so the frontend can communicate with the backend. For questions or issues, please create issues or contact directly.
